@@ -1,0 +1,604 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
+
+
+
+  <meta charset="utf-8">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+  <title>Disable button for 24 hours with pure javascript</title>
+
+  <link rel="stylesheet" media="screen" href="https://cpwebassets.codepen.io/assets/fullpage/fullpage-e7501c25084e5f502d1074671fca0382a09ba24d5cdc8869fdd4967e40fdce14.css" />
+  
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
+
+
+
+
+
+  <title>Disable button for 24 hours with pure javascript</title>
+
+  <style>
+    html { font-size: 15px; }
+    html, body { margin: 0; padding: 0; min-height: 100%; }
+    body { height:100%; display: flex; flex-direction: column; }
+    .referer-warning {
+      background: black;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      padding: 0.75em;
+      color: white;
+      text-align: center;
+      font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, system-ui, Sans-Serif;
+      line-height: 1.2;
+      font-size: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    .referer-warning span { font-family: initial; }
+    .referer-warning h1 { font-size: 1.2rem; margin: 0; }
+    .referer-warning a { color: #56bcf9; }
+  </style>
+</head>
+
+<body class="">
+  
+  <div id="result-iframe-wrap" role="main">
+    <iframe
+      id="result"
+      srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot; >
+
+<head>
+  <meta charset=&quot;UTF-8&quot;>
+  
+
+    <link rel=&quot;apple-touch-icon&quot; type=&quot;image/png&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png&quot; />
+
+    <meta name=&quot;apple-mobile-web-app-title&quot; content=&quot;CodePen&quot;>
+
+    <link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico&quot; />
+
+    <link rel=&quot;mask-icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg&quot; color=&quot;#111&quot; />
+
+
+
+  
+    <script src=&quot;https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js&quot;></script>
+
+
+  <title>Disable button for 24 hours with pure javascript</title>
+
+    <link rel=&quot;canonical&quot; href=&quot;https://codepen.io/dimaslanjaka/pen/bGMLjbK&quot;>
+  
+  
+  
+  
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  <style type=&quot;text/css&quot;>
+/* Stylish button */
+.div, input[type=&quot;submit&quot;], div {
+  background-color: black;
+  color: white;
+    border: none;
+    color: white;
+    padding: 3px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    border-radius: 1px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.close {
+  display: inline-flex;
+  background-color: green;
+  color: white;
+  margin: 14px 12px;
+  margin: auto;
+}
+
+#markTransitionDelayValue,
+#msg {
+
+  padding: 9px;
+  background: green;
+}
+
+.content {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+
+}
+
+
+
+
+</style>
+
+
+
+<script type=&quot;text/javascript&quot; src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;></script>
+    <script type=&quot;text/javascript&quot;>
+        $(function () {
+            $('[id*=join]').on('click', function () {
+                // do you stuff of button 1 click
+                
+                setTimeout(function () {
+                    $('[id*=btn2]').trigger('click');
+                }, 5300);
+            });
+
+            $('[id*=btn2]').on('click', function () {
+                // do stuff of button2 click
+                
+            });
+        });
+    </script>
+  <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js&quot;></script>
+  
+</head>
+
+<body translate=&quot;no&quot;>
+	<div><button id=&quot;join&quot; class=&quot;close&quot; class=&quot;box3-alt&quot;>Join here</button>
+
+<span class=&quot;loyalty-account__overview__status__account-number&quot; id=&quot;msg&quot; data-dollars-to-next-tier=&quot;230&quot; data-rewards-tiername=&quot;2&quot;>User reward - in</span>
+
+<span id=&quot;markTransitionDelayValue&quot;>0</span>
+</div>
+	<br/><br/><br/><br/>
+	
+  <input onclick=&quot;wholeTimer()&quot;  id=&quot;btClickMe&quot;/>
+
+   <input id=&quot;btClickRelease&quot;/>
+
+  
+  <script>window.onload=function(){
+ if(document.getElementById(&quot;btClickMe&quot;)!=null||document.getElementById(&quot;btClickMe&quot;)!=&quot;&quot;){ 
+ document.getElementById(&quot;btClickMe&quot;).click();
+ }
+}</script>
+  
+  
+  
+  
+<script type=&quot;text/javascript&quot;>
+         document.getElementById(&quot;btn2&quot;).onclick = function(){
+              document.getElementById(&quot;btn3&quot;).click();
+}
+        </script>
+        
+
+    
+
+
+
+<script id=&quot;rendered-js&quot; >
+// I'm sure theres a million and one much easier ways to do this! But here's how I made it work!
+function wholeTimer() {
+  var hoursLabel = document.getElementById(&quot;hours&quot;);
+  var minutesLabel = document.getElementById(&quot;minutes&quot;);
+  var secondsLabel = document.getElementById(&quot;msg&quot;);
+  var totalSeconds = 0;
+  var seconds = 0;
+  var minutes = 0;
+  var hours = 0;
+  setInterval(setTime, 1000);
+  function setTime() {
+    // animations 
+    if (totalSeconds >= 0) {
+      var element = document.getElementById(&quot;msg&quot;);
+      element.classList.add(&quot;box3-alt&quot;);
+    }
+    ++totalSeconds;
+  }
+}
+// adds the extra 0 in front of the numbers
+function pad(val) {
+  var valString = val + &quot;&quot;;
+  if (valString.length < 2) {
+    return &quot;0&quot; + valString;
+  } else {
+    return valString;
+  }
+}
+//# sourceURL=pen.js
+    </script>
+
+
+<script type=&quot;text/javascript&quot;>
+function wholeTimer() {
+var timeleft = 30;
+var downloadTimer = setInterval(function(){
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
+
+
+
+  <meta charset="utf-8">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+  <title>Disable button for 24 hours with pure javascript</title>
+
+  <link rel="stylesheet" media="screen" href="https://cpwebassets.codepen.io/assets/fullpage/fullpage-e7501c25084e5f502d1074671fca0382a09ba24d5cdc8869fdd4967e40fdce14.css" />
+  
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
+
+
+
+
+
+  <title>Disable button for 24 hours with pure javascript</title>
+
+  <style>
+    html { font-size: 15px; }
+    html, body { margin: 0; padding: 0; min-height: 100%; }
+    body { height:100%; display: flex; flex-direction: column; }
+    .referer-warning {
+      background: black;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      padding: 0.75em;
+      color: white;
+      text-align: center;
+      font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, system-ui, Sans-Serif;
+      line-height: 1.2;
+      font-size: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    .referer-warning span { font-family: initial; }
+    .referer-warning h1 { font-size: 1.2rem; margin: 0; }
+    .referer-warning a { color: #56bcf9; }
+  </style>
+</head>
+
+<body class="">
+  
+  <div id="result-iframe-wrap" role="main">
+    <iframe
+      id="result"
+      srcdoc="<!DOCTYPE html>
+<html lang=&quot;en&quot; >
+
+<head>
+  <meta charset=&quot;UTF-8&quot;>
+  
+
+    <link rel=&quot;apple-touch-icon&quot; type=&quot;image/png&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png&quot; />
+
+    <meta name=&quot;apple-mobile-web-app-title&quot; content=&quot;CodePen&quot;>
+
+    <link rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico&quot; />
+
+    <link rel=&quot;mask-icon&quot; type=&quot;image/x-icon&quot; href=&quot;https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg&quot; color=&quot;#111&quot; />
+
+
+
+  
+    <script src=&quot;https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js&quot;></script>
+
+
+  <title>Disable button for 24 hours with pure javascript</title>
+
+    <link rel=&quot;canonical&quot; href=&quot;https://codepen.io/dimaslanjaka/pen/bGMLjbK&quot;>
+  
+  
+  
+  
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  <style type=&quot;text/css&quot;>
+/* Stylish button */
+.div, input[type=&quot;submit&quot;], div {
+  background-color: black;
+  color: white;
+    border: none;
+    color: white;
+    padding: 3px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    border-radius: 1px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.close {
+  display: inline-flex;
+  background-color: green;
+  color: white;
+  margin: 14px 12px;
+  margin: auto;
+}
+
+#markTransitionDelayValue,
+#msg {
+
+  padding: 9px;
+  background: green;
+}
+
+.content {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+
+}
+
+
+
+
+</style>
+
+
+
+<script type=&quot;text/javascript&quot; src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;></script>
+    <script type=&quot;text/javascript&quot;>
+        $(function () {
+            $('[id*=join]').on('click', function () {
+                // do you stuff of button 1 click
+                
+                setTimeout(function () {
+                    $('[id*=btn2]').trigger('click');
+                }, 5300);
+            });
+
+            $('[id*=btn2]').on('click', function () {
+                // do stuff of button2 click
+                
+            });
+        });
+    </script>
+  <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js&quot;></script>
+  
+</head>
+
+<body translate=&quot;no&quot;>
+	<div><button id=&quot;join&quot; class=&quot;close&quot; class=&quot;box3-alt&quot;>Join here</button>
+
+<span class=&quot;loyalty-account__overview__status__account-number&quot; id=&quot;msg&quot; data-dollars-to-next-tier=&quot;230&quot; data-rewards-tiername=&quot;2&quot;>User reward - in</span>
+
+<span id=&quot;markTransitionDelayValue&quot;>0</span>
+</div>
+	<br/><br/><br/><br/>
+	
+  <input onclick=&quot;wholeTimer()&quot;  id=&quot;btClickMe&quot;/>
+
+   <input id=&quot;btClickRelease&quot;/>
+
+  
+  <script>window.onload=function(){
+ if(document.getElementById(&quot;btClickMe&quot;)!=null||document.getElementById(&quot;btClickMe&quot;)!=&quot;&quot;){ 
+ document.getElementById(&quot;btClickMe&quot;).click();
+ }
+}</script>
+  
+  
+  
+  
+<script type=&quot;text/javascript&quot;>
+         document.getElementById(&quot;btn2&quot;).onclick = function(){
+              document.getElementById(&quot;btn3&quot;).click();
+}
+        </script>
+        
+
+    
+
+
+
+<script id=&quot;rendered-js&quot; >
+// I'm sure theres a million and one much easier ways to do this! But here's how I made it work!
+function wholeTimer() {
+  var hoursLabel = document.getElementById(&quot;hours&quot;);
+  var minutesLabel = document.getElementById(&quot;minutes&quot;);
+  var secondsLabel = document.getElementById(&quot;msg&quot;);
+  var totalSeconds = 0;
+  var seconds = 0;
+  var minutes = 0;
+  var hours = 0;
+  setInterval(setTime, 1000);
+  function setTime() {
+    // animations 
+    if (totalSeconds >= 0) {
+      var element = document.getElementById(&quot;msg&quot;);
+      element.classList.add(&quot;box3-alt&quot;);
+    }
+    ++totalSeconds;
+  }
+}
+// adds the extra 0 in front of the numbers
+function pad(val) {
+  var valString = val + &quot;&quot;;
+  if (valString.length < 2) {
+    return &quot;0&quot; + valString;
+  } else {
+    return valString;
+  }
+}
+//# sourceURL=pen.js
+    </script>
+
+
+<script type=&quot;text/javascript&quot;>
+function wholeTimer() {
+var timeleft = 30;
+var downloadTimer = setInterval(function(){
+  if(timeleft <= 0){
+    clearInterval(downloadTimer);
+    document.getElementById(&quot;msg&quot;).innerHTML = &quot;User - rewarded: 2 points&quot;;
+  } else {
+    document.getElementById(&quot;markTransitionDelayValue&quot;).innerHTML = timeleft + &quot;&quot;;
+  }
+  timeleft -= 1;
+}, 1000);
+}
+</script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  
+<script id=&quot;rendered-js&quot; >
+// codepen useless log clear
+console.clear();
+
+const btn = document.getElementById(&quot;btClickMe&quot;);
+let get = getCookie(&quot;clicked&quot;); // check cookie after page loaded
+if (get) {
+  btn.disabled = true; // disable the button after page loaded
+}
+
+
+
+const btn2 = document.getElementById(&quot;btClickRelease&quot;);
+btn2.addEventListener(&quot;click&quot;, function (_event) {
+  btn.disabled = false; // to force enable button
+  // delete cookie
+  deleteCookie(&quot;clicked&quot;);
+});
+
+btn.addEventListener(&quot;click&quot;, function (_event) {
+  get = getCookie(&quot;clicked&quot;); // check cookie exist
+  if (!get) setCookie(&quot;clicked&quot;, &quot;true&quot;, 1); // set cookie after clicked
+  btn.disabled = true; // disable the button after clicked
+  var msg = document.getElementById(&quot;msg&quot;);
+  msg.innerHTML = &quot;User - reward: 2 points &quot;;
+});
+
+function setCookie(name, value, days) {
+  var expires = &quot;&quot;;
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = &quot;; expires=&quot; + date.toUTCString();
+  }
+  document.cookie = name + &quot;=&quot; + (value || &quot;&quot;) + expires + &quot;; path=/&quot;;
+}
+function getCookie(name) {
+  var nameEQ = name + &quot;=&quot;;
+  var ca = document.cookie.split(&quot;;&quot;);
+  for (var i = 0; i < ca.length; i++) {if (window.CP.shouldStopExecution(0)) break;
+    var c = ca[i];
+    while (c.charAt(0) == &quot; &quot;) {if (window.CP.shouldStopExecution(1)) break;c = c.substring(1, c.length);}window.CP.exitedLoop(1);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }window.CP.exitedLoop(0);
+  return null;
+}
+
+function deleteCookie(name) {
+  document.cookie = name + &quot;=; expires=Thu, 01 Jan 1970 00:00:01 GMT;&quot;;
+}
+//# sourceURL=pen.js
+    </script>
+
+  
+</body>
+
+</html>
+"
+      sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups-to-escape-sandbox allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation" allow="accelerometer *; bluetooth *; camera *; encrypted-media *; display-capture *; geolocation *; gyroscope *; microphone *; midi *; clipboard-read *; clipboard-write *; web-share *; serial *; xr-spatial-tracking *" allowTransparency="true"
+      allowpaymentrequest="true" allowfullscreen="true" class="result-iframe" style="width: 100%; hight: 100%; z-index: 999999;">
+      </iframe>
+  </div>
+
+</body>
+
+</html>
+￼Enter  if(timeleft <= 0){
+    clearInterval(downloadTimer);
+    document.getElementById(&quot;msg&quot;).innerHTML = &quot;User - rewarded: 2 points&quot;;
+  } else {
+    document.getElementById(&quot;markTransitionDelayValue&quot;).innerHTML = timeleft + &quot;&quot;;
+  }
+  timeleft -= 1;
+}, 1000);
+}
+</script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  
+<script id=&quot;rendered-js&quot; >
+// codepen useless log clear
+console.clear();
+
+const btn = document.getElementById(&quot;btClickMe&quot;);
+let get = getCookie(&quot;clicked&quot;); // check cookie after page loaded
+if (get) {
+  btn.disabled = true; // disable the button after page loaded
+}
+
+
+
+const btn2 = document.getElementById(&quot;btClickRelease&quot;);
+btn2.addEventListener(&quot;click&quot;, function (_event) {
+disabled = false; // to force enable button
+  // delete cookie
+  deleteCookie(&quot;clicked&quot;);
+});
+
+btn.addEventListener(&quot;click&quot;, function (_event) {
+  get = getCookie(&quot;clicked&quot;); // check cookie exist
+  if (!get) setCookie(&quot;clicked&quot;, &quot;true&quot;, 1); // set cookie after clicked
+  btn.disabled = true; // disable the button after clicked
+  var msg = document.getElementById(&quot;msg&quot;);
+  msg.innerHTML = &quot;User - reward: 2 points &quot;;
+});
+
+function setCookie(name, value, days) {
+  var expires = &quot;&quot;;
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = &quot;; expires=&quot; + date.toUTCString();
+  }
+  document.cookie = name + &quot;=&quot; + (value || &quot;&quot;) + expires + &quot;; path=/&quot;;
+}
+function getCookie(name) {
+  var nameEQ = name + &quot;=&quot;;
+  var ca = document.cookie.split(&quot;;&quot;);
+  for (var i = 0; i < ca.length; i++) {if (window.CP.shouldStopExecution(0)) break;
